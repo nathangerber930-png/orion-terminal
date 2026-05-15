@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orion Trade Terminal — Track. Analyse. Improve.</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2199279982019872" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#080b0f;--bg2:#0f1215;--bg3:#141820;--border:#1e2530;--border2:#2a3340;--text:#c8d4e0;--dim:#4a5568;--accent:#f0a500;--accent2:#e06c1a;--green:#3ecf8e;--red:#f16767}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(240,165,0,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(240,165,0,.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+.mono{font-family:'Space Mono',monospace}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(8,11,15,.9);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo{width:36px;height:36px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.nav-name{font-family:'Space Mono',monospace;font-size:15px;font-weight:700;letter-spacing:3px;color:#fff}
+.nav-links{display:flex;gap:10px}
+.btn-out{background:transparent;border:1px solid var(--border2);color:var(--text);padding:8px 20px;border-radius:4px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;text-decoration:none;transition:all .15s}
+.btn-out:hover{border-color:var(--accent);color:var(--accent)}
+.btn-fil{background:var(--accent);color:#000;border:none;padding:8px 20px;border-radius:4px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .15s}
+.btn-fil:hover{background:var(--accent2)}
+
+/* TICKER */
+/* TradingView ticker used instead */
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:calc(100vh - 100px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 60px;text-align:center}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--accent);background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);border-radius:20px;padding:6px 16px;margin-bottom:36px}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:p 1.5s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+
+.logo-wrap{position:relative;display:inline-block;margin-bottom:36px}
+.logo-main{width:110px;height:110px;background:var(--accent);border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:52px;font-weight:700;box-shadow:0 0 80px rgba(240,165,0,.35),0 0 160px rgba(240,165,0,.1);position:relative;z-index:1}
+.logo-ring{position:absolute;inset:-14px;border:1px solid rgba(240,165,0,.18);border-radius:34px;animation:spin 10s linear infinite}
+.logo-ring::before{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;background:var(--accent);border-radius:50%;transform:translateX(-50%)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.hero-title{font-family:'Space Mono',monospace;font-size:clamp(32px,5.5vw,68px);font-weight:700;letter-spacing:4px;color:#fff;line-height:1.05;margin-bottom:24px}
+.hero-title em{color:var(--accent);font-style:normal}
+.hero-sub{font-size:clamp(14px,1.8vw,17px);color:var(--dim);max-width:500px;line-height:1.85;margin-bottom:48px}
+
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:64px}
+.btn-hero-p{background:var(--accent);color:#000;border:none;padding:16px 38px;border-radius:6px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .15s;box-shadow:0 4px 28px rgba(240,165,0,.3)}
+.btn-hero-p:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 8px 40px rgba(240,165,0,.4)}
+.btn-hero-g{background:transparent;color:var(--text);border:1px solid var(--border2);padding:16px 38px;border-radius:6px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1px;cursor:pointer;text-decoration:none;transition:all .15s}
+.btn-hero-g:hover{border-color:var(--accent);color:var(--accent)}
+
+.hero-stats{display:flex;gap:48px;justify-content:center;flex-wrap:wrap}
+.hstat{text-align:center}
+.hstat-v{font-family:'Space Mono',monospace;font-size:30px;font-weight:700;color:var(--accent)}
+.hstat-l{font-size:10px;color:var(--dim);margin-top:4px;letter-spacing:1px}
+
+/* FEATURES */
+.sec{position:relative;z-index:1;padding:80px 24px}
+.sec-inner{max-width:1100px;margin:0 auto}
+.sec-lbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--accent);margin-bottom:10px}
+.sec-title{font-family:'Space Mono',monospace;font-size:clamp(22px,2.8vw,34px);font-weight:700;letter-spacing:2px;color:#fff;margin-bottom:14px}
+.sec-desc{font-size:14px;color:var(--dim);max-width:460px;line-height:1.8;margin-bottom:48px}
+
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.feat{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:24px;transition:all .2s}
+.feat:hover{border-color:rgba(240,165,0,.25);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.feat-ico{font-size:26px;margin-bottom:14px}
+.feat-t{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;color:#fff;margin-bottom:8px}
+.feat-d{font-size:12px;color:var(--dim);line-height:1.75}
+
+/* HOW IT WORKS */
+.how-sec{position:relative;z-index:1;padding:80px 24px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;position:relative;max-width:900px;margin:0 auto}
+.steps::after{content:'';position:absolute;top:31px;left:12%;right:12%;height:1px;background:var(--border);z-index:0}
+.step{text-align:center;padding:0 12px;position:relative;z-index:1}
+.step-n{width:62px;height:62px;border-radius:50%;background:var(--bg3);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:var(--accent);margin:0 auto 16px}
+.step-t{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1px;color:#fff;margin-bottom:8px}
+.step-d{font-size:11px;color:var(--dim);line-height:1.65}
+
+/* CTA */
+.cta{position:relative;z-index:1;padding:90px 24px;text-align:center;background:radial-gradient(ellipse at center,rgba(240,165,0,.06) 0%,transparent 70%)}
+.cta-t{font-family:'Space Mono',monospace;font-size:clamp(20px,2.8vw,32px);font-weight:700;letter-spacing:3px;color:#fff;margin-bottom:16px}
+.cta-d{font-size:15px;color:var(--dim);max-width:440px;margin:0 auto 36px;line-height:1.8}
+
+/* FOOTER */
+footer{position:relative;z-index:1;padding:28px 48px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px}
+.foot-b{font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px}
+.foot-b em{color:var(--accent);font-style:normal}
+.foot-links{display:flex;gap:20px}
+.foot-a{font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);text-decoration:none;letter-spacing:1px;transition:color .12s}
+.foot-a:hover{color:var(--accent)}
+
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-name{display:none}
+  .steps{grid-template-columns:1fr 1fr}
+  .steps::after{display:none}
+  footer{flex-direction:column;align-items:center;text-align:center;padding:24px 20px}
+}
+@media(max-width:480px){
+  .steps{grid-template-columns:1fr}
+  .hero-stats{gap:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="/">
+    <div class="nav-logo">⬡</div>
+    <span class="nav-name">ORION</span>
+  </a>
+  <div class="nav-links">
+    <a class="btn-out" href="/login/">SIGN IN</a>
+    <a class="btn-fil" href="/register/">GET STARTED FREE</a>
+  </div>
+</nav>
+
+<!-- LIVE TICKER — TradingView -->
+<div style="background:#0d1018;border-bottom:1px solid #1a2232">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+      "symbols": [
+        {"proName":"NASDAQ:AAPL","title":"Apple"},
+        {"proName":"NASDAQ:TSLA","title":"Tesla"},
+        {"proName":"NASDAQ:NVDA","title":"NVIDIA"},
+        {"proName":"NASDAQ:MSFT","title":"Microsoft"},
+        {"proName":"NASDAQ:AMZN","title":"Amazon"},
+        {"proName":"NASDAQ:META","title":"Meta"},
+        {"proName":"NASDAQ:GOOGL","title":"Alphabet"},
+        {"proName":"NASDAQ:NFLX","title":"Netflix"},
+        {"proName":"NYSE:JPM","title":"JPMorgan"},
+        {"proName":"FX:EURUSD","title":"EUR/USD"},
+        {"proName":"FX:GBPUSD","title":"GBP/USD"},
+        {"proName":"FX:USDJPY","title":"USD/JPY"},
+        {"proName":"FOREXCOM:GOLD","title":"Gold"},
+        {"proName":"BITSTAMP:BTCUSD","title":"Bitcoin"}
+      ],
+      "showSymbolLogo": false,
+      "isTransparent": true,
+      "displayMode": "adaptive",
+      "colorTheme": "dark",
+      "locale": "en"
+    }
+    </script>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge"><span class="pulse"></span> PROFESSIONAL TRADING JOURNAL</div>
+  <div class="logo-wrap">
+    <div class="logo-main">⬡</div>
+    <div class="logo-ring"></div>
+  </div>
+  <h1 class="hero-title">ORION TRADE<br><em>TERMINAL</em></h1>
+  <p class="hero-sub">The professional stock trading journal built for serious traders. Log every trade, track your P&amp;L, and understand your performance with powerful analytics.</p>
+  <div class="hero-btns">
+    <a class="btn-hero-p" href="/auth/login/google-oauth2/" style="display:flex;align-items:center;gap:10px">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      CONTINUE WITH GOOGLE
+    </a>
+    <a class="btn-hero-g" href="/login/">SIGN IN WITH USERNAME</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-v">∞</div><div class="hstat-l">TRADES TRACKED</div></div>
+    <div class="hstat"><div class="hstat-v">10</div><div class="hstat-l">FREE TOKENS</div></div>
+    <div class="hstat"><div class="hstat-v">6</div><div class="hstat-l">CURRENCIES</div></div>
+    <div class="hstat"><div class="hstat-v">R0</div><div class="hstat-l">COST TO START</div></div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="sec">
+  <div class="sec-inner">
+    <div class="sec-lbl">FEATURES</div>
+    <div class="sec-title">EVERYTHING YOU NEED</div>
+    <div class="sec-desc">Built from the ground up for stock traders who take their performance seriously.</div>
+    <div class="feat-grid">
+      <div class="feat"><div class="feat-ico">📈</div><div class="feat-t">TRADE JOURNAL</div><div class="feat-d">Log every stock trade with symbol, shares, entry and exit price. Your running balance updates automatically after every single trade.</div></div>
+      <div class="feat"><div class="feat-ico">📊</div><div class="feat-t">P&amp;L ANALYTICS</div><div class="feat-d">See your win rate, average profit per trade, best and worst trades, and total net P&amp;L — all in one clean dashboard.</div></div>
+      <div class="feat"><div class="feat-ico">◆</div><div class="feat-t">AI HELP SYSTEM</div><div class="feat-d">Rule-based analysis that tells you which broker gives you the best win rate and which stocks you trade most profitably.</div></div>
+      <div class="feat"><div class="feat-ico">◉</div><div class="feat-t">BROKER TRACKING</div><div class="feat-d">Track performance per broker. See win rates, spreads and trade counts to know which broker actually works for your strategy.</div></div>
+      <div class="feat"><div class="feat-ico">⬡</div><div class="feat-t">TOKEN ECONOMY</div><div class="feat-d">Start with 10 free tokens. Earn more by watching ads or redeeming gift codes. Keeps the platform sustainable while staying free to use.</div></div>
+      <div class="feat"><div class="feat-ico">▶</div><div class="feat-t">TRADING COURSES</div><div class="feat-d">Access trading education directly inside the terminal. Stock basics, risk management, price action and psychology — taught by Orion.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-sec">
+  <div class="sec-inner">
+    <div class="sec-lbl">HOW IT WORKS</div>
+    <div class="sec-title">UP AND RUNNING IN MINUTES</div>
+    <div class="sec-desc" style="margin-bottom:52px">No setup. No downloads. Just create an account and start tracking.</div>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-t">CREATE ACCOUNT</div><div class="step-d">Sign up with your email. One account per email. Your data is private and fully isolated from other users.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-t">SET BALANCE</div><div class="step-d">Enter your starting account balance and choose your currency — USD, EUR, GBP, JPY, CHF or ZAR.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-t">LOG TRADES</div><div class="step-d">Add your stock trades with entry, exit and shares. P/L is calculated automatically.</div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-t">ANALYSE &amp; IMPROVE</div><div class="step-d">Use balance summary and AI help to understand your patterns and improve your trading strategy.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="cta-t">START TRACKING TODAY</div>
+  <p class="cta-d">Free to start. No credit card. No downloads. Just your trades and your performance — all in one place.</p>
+  <a class="btn-hero-p" href="/register/">CREATE FREE ACCOUNT →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-b"><em>⬡</em> ORION TRADE TERMINAL</div>
+  <div class="foot-links">
+    <a class="foot-a" href="/login/">SIGN IN</a>
+    <a class="foot-a" href="/register/">REGISTER</a>
+  </div>
+  <div class="foot-b">© 2026 — Built for serious traders</div>
+</footer>
+
+</body>
+</html>
