@@ -138,3 +138,4 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
 )
+SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'https://orion-terminal-production.up.railway.app/auth/complete/google-oauth2/'
