@@ -7,7 +7,6 @@ SECRET_KEY    = os.environ.get('SECRET_KEY', 'orion-dev-secret-change-this-in-pr
 DEBUG         = os.environ.get('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
-# CSRF — trust Railway domains and any custom domain
 _csrf_raw = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
 if _csrf_raw:
     CSRF_TRUSTED_ORIGINS = [o.strip() for o in _csrf_raw.split(',')]
@@ -33,7 +32,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',   # serves static files in production
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -54,17 +53,14 @@ TEMPLATES = [{
             'django.template.context_processors.request',
             'django.contrib.auth.context_processors.auth',
             'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
+            'social_django.context_processors.backends',
+            'social_django.context_processors.login_redirect',
         ],
     },
 }]
 
 WSGI_APPLICATION = 'orion.wsgi.application'
 
-# ── Database ─────────────────────────────────────────────────
-# Uses PostgreSQL on Railway/Render (DATABASE_URL env var)
-# Falls back to SQLite locally
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if DATABASE_URL:
     import dj_database_url
@@ -77,31 +73,32 @@ else:
         }
     }
 
-# ── Auth ──────────────────────────────────────────────────────
-LOGIN_URL          = '/login/'
-LOGIN_REDIRECT_URL = '/dashboard/'
+LOGIN_URL           = '/login/'
+LOGIN_REDIRECT_URL  = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', 'OPTIONS': {'min_length': 6}},
 ]
 
-# ── Static files ──────────────────────────────────────────────
 STATIC_URL  = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Africa/Johannesburg'
-USE_TZ = True
+TIME_ZONE     = 'Africa/Johannesburg'
+USE_TZ        = True
 
-# ── Email (password reset) ────────────────────────────────────
+# ── Force HTTPS for Railway proxy ─────────────────────────────
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST    = True
+SECURE_SSL_REDIRECT     = False
+
+# ── Email ──────────────────────────────────────────────────────
 _email_user = os.environ.get('EMAIL_HOST_USER', '').strip()
 _email_pass = os.environ.get('EMAIL_HOST_PASSWORD', '').strip()
-
 if _email_user and _email_pass:
-    # Real Gmail SMTP — sends actual emails to users
     EMAIL_BACKEND       = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST          = 'smtp.gmail.com'
     EMAIL_PORT          = 587
@@ -111,11 +108,10 @@ if _email_user and _email_pass:
     DEFAULT_FROM_EMAIL  = os.environ.get('DEFAULT_FROM_EMAIL', f'Orion Terminal <{_email_user}>')
     SERVER_EMAIL        = _email_user
 else:
-    # No credentials set — print reset links to Railway logs for testing
-    EMAIL_BACKEND       = 'django.core.mail.backends.console.EmailBackend'
-    DEFAULT_FROM_EMAIL  = 'Orion Terminal <noreply@orionterminal.com>'
+    EMAIL_BACKEND      = 'django.core.mail.backends.console.EmailBackend'
+    DEFAULT_FROM_EMAIL = 'Orion Terminal <noreply@orionterminal.com>'
 
-# ── Google OAuth ──────────────────────────────────────────────
+# ── Google OAuth ───────────────────────────────────────────────
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
@@ -123,9 +119,11 @@ AUTHENTICATION_BACKENDS = [
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY    = os.environ.get('GOOGLE_CLIENT_ID', '')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', '')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE  = ['email', 'profile']
-SOCIAL_AUTH_URL_NAMESPACE        = 'social'
-SOCIAL_AUTH_LOGIN_REDIRECT_URL   = '/dashboard/'
+SOCIAL_AUTH_URL_NAMESPACE         = 'social'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL    = '/dashboard/'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/dashboard/'
+SOCIAL_AUTH_REDIRECT_IS_HTTPS     = True
+SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'https://orion-terminal-production.up.railway.app/auth/complete/google-oauth2/'
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',
@@ -138,4 +136,3 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
 )
-SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'https://orion-terminal-production.up.railway.app/auth/complete/google-oauth2/'
